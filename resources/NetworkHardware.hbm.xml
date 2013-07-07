@@ -1,0 +1,55 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ 
+<hibernate-mapping>
+  <class name="com.gromholl.hibernate.entity.NetworkHardware" table="TB_NETWORK_HARDWARE">
+    <id column="id" name="id" type="java.lang.Long">
+      <generator class="increment"/>
+    </id>    
+	<discriminator>
+    	<column name="NH_TYPE"/>
+    </discriminator>    
+    <property column="ip" name="ip" type="java.lang.String" not-null="true"/>
+    <property column="name" name="name" type="java.lang.String" not-null="true"/>
+    <property column="description" name="description" type="java.lang.String" not-null="true"/>
+    
+	<subclass name="com.gromholl.hibernate.entity.database.DataBase" discriminator-value="DataBase">
+		<property column="dbname" name="dbname" type="java.lang.String"/>	
+	
+		<subclass name="com.gromholl.hibernate.entity.database.DataBaseAccess" discriminator-value="DB_Access">
+		</subclass>
+		<subclass name="com.gromholl.hibernate.entity.database.DataBaseMongoDB" discriminator-value="DB_Mongo">
+		</subclass>
+		<subclass name="com.gromholl.hibernate.entity.database.DataBaseMySQL" discriminator-value="DB_MySQL">
+		</subclass>
+		<subclass name="com.gromholl.hibernate.entity.database.DataBasePostgreSQL" discriminator-value="DB_PostgreSQL">
+		</subclass>
+		<subclass name="com.gromholl.hibernate.entity.database.DataBaseSQLite" discriminator-value="DB_SQLite">
+		</subclass>
+	</subclass>
+	
+	<subclass name="com.gromholl.hibernate.entity.router.Router" discriminator-value="Router">		
+    	<property column="model" name="model" type="java.lang.String"/>	
+    	<property column="portnum" name="portnum" type="java.lang.Long"/>	
+    	
+		<subclass name="com.gromholl.hibernate.entity.router.RouterCisco" discriminator-value="Router_Cisco">
+		</subclass>
+		<subclass name="com.gromholl.hibernate.entity.router.RouterLinksys" discriminator-value="Router_Linksys">
+		</subclass>
+		<subclass name="com.gromholl.hibernate.entity.router.RouterNetgear" discriminator-value="Router_Netgear">
+		</subclass>
+	</subclass>
+	
+	<subclass name="com.gromholl.hibernate.entity.terminal.Terminal" discriminator-value="Terminal">
+    	<property column="os" name="os" type="java.lang.String"/>
+    	
+		<subclass name="com.gromholl.hibernate.entity.terminal.TerminalLinux" discriminator-value="Terminal_linux">
+		</subclass>
+		<subclass name="com.gromholl.hibernate.entity.terminal.TerminalMacOS" discriminator-value="Terminal_mac">
+		</subclass>
+		<subclass name="com.gromholl.hibernate.entity.terminal.TerminalWindows" discriminator-value="Terminal_windows">
+		</subclass>
+	</subclass>
+    
+  </class>
+</hibernate-mapping>

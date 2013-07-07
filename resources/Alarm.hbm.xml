@@ -1,0 +1,22 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ 
+<hibernate-mapping>
+  <class name="com.gromholl.hibernate.entity.Alarm" table="TB_ALARM">
+    <id column="id" name="id" type="java.lang.Long">
+      <generator class="increment"/>
+    </id>
+
+    <property column="type" name="type" type="java.lang.String"/>
+    <property column="description" name="description" type="java.lang.String"/>
+   
+	<many-to-one
+		name="target"
+		class="com.gromholl.hibernate.entity.NetworkHardware" 
+		column="target" 
+		not-null="true"
+		lazy="false">
+	</many-to-one>
+    
+  </class>
+</hibernate-mapping>
